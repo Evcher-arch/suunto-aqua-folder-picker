@@ -1,0 +1,13 @@
+build/
+evidence/
+reverse/
+release/*.apk
+release/*.xapk
+release/*.idsig
+release/*.keystore
+release/suunto-6.13.8-folders-beta1/
+*.class
+*.jar
+*.zip
+__pycache__/
+work/
