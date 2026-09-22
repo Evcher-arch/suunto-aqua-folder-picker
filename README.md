@@ -1,5 +1,12 @@
 # Suunto Aqua folder picker
 
+## RuStore moderation build
+
+This branch contains the reduced-permission build. See the
+[changes, build instructions and phone test checklist](docs/rustore-permissions.md).
+The previous `v1.0.0` release is preserved.
+Download the separate [v1.0.1-rustore release](https://github.com/Evcher-arch/suunto-aqua-folder-picker/releases/tag/v1.0.1-rustore).
+
 Clean-room modernization module for the Suunto Android app's Aqua offline music workflow. It adds folder-aware selection, USB folder indexing through Android's Storage Access Framework, a main-screen command named `Обновить список папок по USB`, and a toggle named `Выделить все`.
 
 The module is designed for authorized personal testing with Suunto Aqua and Suunto 6.13.8. It does not modify music files or headset firmware.
