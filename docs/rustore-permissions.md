@@ -1,9 +1,9 @@
 # Версия для модерации RuStore
 
-Ветка: `codex/rustore-permissions`. Релиз: `v1.0.1-rustore`.
+Ветка: `codex/rustore-icon-match`. Релиз: `v1.0.3-icon-match`.
 Пакет: `com.evcherarch.suuntoaquamusicfolders`.
 Версия Android: 12L и новее (API 32, как у предыдущего APK).
-`versionCode`: `6013009`. `versionName`: `1.0.1-rustore`.
+`versionCode`: `6013011`. `versionName`: `1.0.3`.
 
 ## Изменения
 
@@ -22,6 +22,11 @@
 Служба `com.suunto.connectivity.notifications.AncsService` удалена из
 манифеста целиком: удаление только её защитного атрибута `android:permission`
 сделало бы экспортированную службу незащищённой.
+
+Иконка приложения заменена на `assets/suunto-aqua-folder-icon-512.png`:
+красный треугольник Suunto, жёлтая папка и нота. Этот же файл нужно загрузить
+в карточку приложения RuStore. В APK ресурс хранится без перекодирования,
+поэтому изображение в установленном приложении и на витрине совпадает.
 
 Сохранены `BLUETOOTH_SCAN` с `neverForLocation`, `BLUETOOTH_CONNECT`, доступ
 к музыке и USB через системный выбор папки. Проверки наличия и включения

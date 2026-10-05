@@ -22,7 +22,7 @@ if (!$AlreadyDecoded) {
     & "$JavaHome\bin\java.exe" -Xmx3g -jar $ApktoolJar d $BaseApk -o $DecodedDir
     Check
 }
-& $Python "$PSScriptRoot\patch_rustore_permissions.py" $DecodedDir
+& $Python "$PSScriptRoot\patch_rustore_permissions.py" $DecodedDir --icon "$PSScriptRoot\..\assets\suunto-aqua-folder-icon-512.png"
 Check
 $unsigned = "$OutputApk.unsigned"
 $aligned = "$OutputApk.aligned"

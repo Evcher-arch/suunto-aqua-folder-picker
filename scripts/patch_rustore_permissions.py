@@ -1,6 +1,7 @@
 """Apply the RuStore permission profile to the decoded v1.0.0 unique APK."""
 import argparse
 import re
+import shutil
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
@@ -22,7 +23,7 @@ def method(text, signature, transform):
     return result
 
 
-def apply(root):
+def apply(root, icon=None):
     manifest = root / 'AndroidManifest.xml'
     ET.register_namespace('android', ANDROID)
     tree = ET.parse(manifest)
@@ -87,12 +88,24 @@ def apply(root):
     yml = config.read_text(encoding='utf-8')
     if 'minSdkVersion: 32' not in yml:
         raise ValueError('This patch requires minSdkVersion 32')
-    yml, count = re.subn(r'(?m)^  versionCode: \d+$', '  versionCode: 6013009', yml)
+    yml, count = re.subn(r'(?m)^  versionCode: \d+$', '  versionCode: 6013011', yml)
     if count != 1:
         raise ValueError('Missing versionCode')
-    yml, count = re.subn(r'(?m)^  versionName: .+$', '  versionName: 1.0.1-rustore', yml)
+    yml, count = re.subn(r'(?m)^  versionName: .+$', '  versionName: 1.0.3', yml)
     if count != 1:
         raise ValueError('Missing versionName')
+    if icon:
+        icon = Path(icon)
+        if not icon.is_file():
+            raise ValueError('Icon file does not exist: ' + str(icon))
+        icon_dir = root / 'res/drawable-nodpi'
+        icon_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(icon, icon_dir / 'suunto_aqua_folder_icon.png')
+        manifest_text = manifest.read_text(encoding='utf-8')
+        manifest_text = manifest_text.replace(
+            'android:icon="@mipmap/ic_launcher"',
+            'android:icon="@drawable/suunto_aqua_folder_icon"')
+        manifest.write_text(manifest_text, encoding='utf-8')
     # Validate all inputs before changing the decoded build.
     tree.write(manifest, encoding='utf-8', xml_declaration=True)
     config.write_text(yml, encoding='utf-8')
@@ -104,4 +117,6 @@ def apply(root):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('decoded', type=Path)
-    apply(parser.parse_args().decoded)
+    parser.add_argument('--icon', type=Path)
+    args = parser.parse_args()
+    apply(args.decoded, args.icon)
